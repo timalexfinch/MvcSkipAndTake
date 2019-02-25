@@ -1,0 +1,95 @@
+﻿@*@model IEnumerable<AWMvcPaging.Models.Product>*@
+
+@model PaginatedList<AWMvcPaging.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Adventureworks Products</h1>
+
+<p>
+    <a asp-action="Create">Create New Product</a>
+</p>
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["CategorySortParam"]">
+                    @*@Html.DisplayNameFor(model => model.ProductCategory)*@
+                    Category
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["ModelSortParam"]">
+                    @*@Html.DisplayNameFor(model => model.ProductModel)*@
+                    Model
+                </a>
+            </th>
+            <th>
+                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParam"]">
+                    @*@Html.DisplayNameFor(model => model.Name)*@
+                    Product
+                </a>
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.ProductCategory)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductModel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>*@
+            <th>
+                @*@Html.DisplayNameFor(model => model.Color)*@
+                Colour
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductCategory.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductModel.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Color)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageIndex="@(Model.PageIndex - 1)"
+   class="btn btn-default btn-outline-info @prevDisabled">
+    &lt; Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageIndex="@(Model.PageIndex + 1)"
+   class="btn btn-default btn-outline-info @nextDisabled">
+    Next &gt;
+</a>
+
+
